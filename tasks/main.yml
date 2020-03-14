@@ -1,0 +1,50 @@
+---
+
+- name: Ensure required packages are installed
+  yum:
+    name: "{{ required_packages }}"
+    state: present
+
+- name: Ensure required services are started and enabled
+  service:
+    name: "{{ item }}"
+    state: started
+    enabled: true
+  loop: "{{ required_services }}"
+
+- name: Ensure Python dependencies are installed
+  easy_install:
+    name: pip
+    state: latest
+
+- name: Ensure docker-py python package is installed
+  pip:
+    name: docker-py
+    state: latest
+
+- name: Login to docker registry
+  docker_login:
+    username: "{{ username }}"
+    password: "{{ password }}"
+    registry: "{{ registry }}"
+  when: (auth_required | bool)
+
+- name: Start the exporter container
+  docker_container:
+    name: vts_exporter
+    image: "{{ image_url }}"
+    state: started
+    network_mode: host
+    env:
+      NGINX_STATUS: "http://{{ nginx_host }}/status/format/json"
+    exposed_ports:
+      - 9913
+
+- name: Ensure exporter port is reachable over firewalld
+  firewalld:
+    port: 9913/tcp
+    immediate: true
+    permanent: true
+    state: enabled
+
+...

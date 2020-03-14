@@ -1,0 +1,19 @@
+---
+
+required_packages:
+  - firewalld
+  - docker
+required_services:
+  - firewalld
+  - docker
+required_dependencies:
+  - pip
+  - docker-py
+nginx_host: localhost
+image_url: sophos/nginx-vts-exporter:latest
+auth_required: false
+registry: docker.io
+username: nonexistentuser
+password: nonexistentpassword
+
+...
