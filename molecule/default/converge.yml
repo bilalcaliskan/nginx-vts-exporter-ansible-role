@@ -5,4 +5,5 @@
   become: true
   ignore_errors: true
   roles:
+    - role: bilalcaliskan.nginx
     - role: bilalcaliskan.nginx_vts_exporter
