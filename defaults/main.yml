@@ -6,6 +6,7 @@ required_packages:
 required_services:
   - firewalld
   - docker
+firewalld_enabled: true
 required_dependencies:
   - pip
   - docker-py
@@ -15,5 +16,3 @@ auth_required: false
 registry: docker.io
 username: nonexistentuser
 password: nonexistentpassword
-
-...

@@ -15,12 +15,12 @@
 - name: Ensure Python dependencies are installed
   easy_install:
     name: pip
-    state: latest
+    state: present
 
 - name: Ensure docker-py python package is installed
   pip:
     name: docker-py
-    state: latest
+    state: present
 
 - name: Login to docker registry
   docker_login:
